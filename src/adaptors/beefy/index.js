@@ -49,7 +49,8 @@ const main = async () => {
     for (const pool of Object.keys(poolData)) {
       if (apy[pool] === undefined) {
         continue;
-      }
+      }      
+
       const poolMeta = meta.find((m) => m?.id === pool);
       const platformId = poolMeta?.platformId;
 
@@ -66,7 +67,7 @@ const main = async () => {
         project: 'beefy',
         symbol: utils.formatSymbol(pool.split('-').slice(1).join('-')),
         tvlUsd: poolData[pool],
-        apy: apy[pool] * 100,
+        apy: poolMeta?.status == 'active' ? apy[pool] * 100: 0,
         poolMeta:
           platformId === undefined ? null : utils.formatChain(platformId),
       });
